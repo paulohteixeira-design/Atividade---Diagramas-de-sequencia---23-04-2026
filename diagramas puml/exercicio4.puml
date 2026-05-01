@@ -1,0 +1,16 @@
+@startuml 4
+actor Cliente
+participant Sistema
+participant "Banco de Dados" as BD
+
+Cliente -> Sistema : informarCodigoProduto(codigo)
+Sistema -> BD : buscarProduto(codigo)
+
+alt Produto encontrado
+    BD --> Sistema : dadosProduto
+    Sistema --> Cliente : exibirProduto(dados)
+else Produto não encontrado
+    BD --> Sistema : nulo
+    Sistema --> Cliente : exibirMensagemErro
+end
+@enduml

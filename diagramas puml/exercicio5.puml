@@ -1,0 +1,15 @@
+@startuml 5
+actor Cliente
+participant Sistema
+participant "Banco de Dados" as BD
+
+Cliente -> Sistema : selecionarProduto(item)
+Sistema -> BD : verificarEstoque(item)
+BD --> Sistema : emEstoque
+
+create "Pedido" as Pedido
+Sistema -> Pedido : criar()
+Sistema -> BD : atualizarEstoque(item)
+BD --> Sistema : confirmacao
+Sistema --> Cliente : compraFinalizada
+@enduml

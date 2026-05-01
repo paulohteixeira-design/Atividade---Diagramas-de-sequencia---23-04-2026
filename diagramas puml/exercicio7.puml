@@ -1,0 +1,16 @@
+@startuml 7
+participant Sistema
+participant "Gateway de Pagamento" as Gateway
+participant "Banco de Dados" as BD
+
+Sistema -> Gateway : enviarDadosCartao(dados)
+Gateway -> Gateway : processarPagamento()
+
+alt Pagamento Autorizado
+    Gateway --> Sistema : autorizado
+    Sistema -> BD : registrarResultado("Sucesso")
+else Pagamento Negado
+    Gateway --> Sistema : negado
+    Sistema -> BD : registrarResultado("Falha")
+end
+@enduml

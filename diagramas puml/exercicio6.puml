@@ -1,0 +1,17 @@
+@startuml6 6
+actor Cliente
+participant Sistema
+participant "Banco de Dados" as BD
+
+Cliente -> Sistema : realizarCompra(item, qtd)
+Sistema -> BD : verificarEstoque(item, qtd)
+
+alt Estoque insuficiente
+    BD --> Sistema : indisponivel
+    Sistema -> Sistema : cancelarCompra()
+    Sistema --> Cliente : informarFaltaEstoque
+else Estoque suficiente
+    BD --> Sistema : disponivel
+    Sistema --> Cliente : prosseguirCompra
+end
+@enduml

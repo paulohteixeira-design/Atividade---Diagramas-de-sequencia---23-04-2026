@@ -1,0 +1,39 @@
+@startuml 10
+actor Cliente
+participant "Portal E-commerce" as Portal
+participant "Sistema Central" as Sistema
+participant "Banco de Dados" as BD
+participant "Gateway Pagamento" as Gateway
+
+== Login ==
+Cliente -> Portal : informarCredenciais()
+Portal -> Sistema : autenticar()
+Sistema --> Cliente : loginOK
+
+== Consulta e Carrinho ==
+Cliente -> Portal : buscarProduto(nome)
+Portal -> Sistema : consultar(nome)
+Sistema -> BD : query()
+BD --> Sistema : resultados
+Sistema --> Cliente : exibirProdutos
+
+create "Carrinho" as Carrinho
+Cliente -> Carrinho : adicionarItens
+loop Para cada item
+    Carrinho -> BD : verificarEstoque()
+    BD --> Carrinho : OK
+end
+
+== Pagamento e Confirmação ==
+Cliente -> Portal : finalizarCompra()
+Portal -> Gateway : processarPagamento(dados)
+alt Sucesso
+    Gateway --> Portal : aprovado
+    Portal -> Sistema : gerarPedido()
+    Sistema -> BD : baixarEstoque()
+    Portal --> Cliente : confirmacaoPedido
+else Falha
+    Gateway --> Portal : negado
+    Portal --> Cliente : erroPagamento
+end
+@enduml

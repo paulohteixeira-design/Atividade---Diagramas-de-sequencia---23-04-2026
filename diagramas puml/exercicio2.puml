@@ -1,0 +1,17 @@
+@startuml 2
+actor Usuario
+participant "Tela de Login" as Tela
+participant Sistema
+
+Usuario -> Tela : informarLoginSenha(usuario, senha)
+Tela -> Sistema : validarDados(usuario, senha)
+
+alt Credenciais válidas
+    Sistema --> Tela : sucesso
+    Tela --> Usuario : acessoLiberado
+else Credenciais inválidas
+    Sistema --> Tela : erro
+    Tela --> Usuario : exibirMensagemErro
+    note right : Usuário permanece na tela de login
+end
+@enduml

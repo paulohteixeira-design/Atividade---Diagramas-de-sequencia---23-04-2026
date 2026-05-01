@@ -1,0 +1,11 @@
+@startuml 8
+actor Usuario
+participant Sistema
+participant "Serviço de E-mail" as Email
+
+Usuario -> Sistema : informarEmail(email)
+Sistema -> Sistema : validarEmail()
+Sistema -> Sistema : gerarToken()
+Sistema -> Email : enviarRecuperacao(email, token)
+Email --> Usuario : e-mail recebido
+@enduml

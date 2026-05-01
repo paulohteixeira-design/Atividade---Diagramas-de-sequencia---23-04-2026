@@ -1,0 +1,17 @@
+@startuml 9
+actor Cliente
+participant Sistema
+participant "Banco de Dados" as BD
+participant Pedido
+
+Cliente -> Sistema : iniciarPedido()
+
+loop Para cada item selecionado
+    Cliente -> Sistema : adicionarItem(item)
+    Sistema -> BD : verificarEstoque(item)
+    BD --> Sistema : disponivel
+    Sistema -> Pedido : adicionar(item)
+end
+
+Sistema --> Cliente : itensAdicionadosComSucesso
+@enduml

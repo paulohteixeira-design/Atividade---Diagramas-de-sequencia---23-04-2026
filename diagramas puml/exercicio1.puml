@@ -1,0 +1,8 @@
+@startuml 1
+actor Usuario
+participant Sistema
+
+Usuario -> Sistema : enviarLoginSenha(usuario, senha)
+Sistema -> Sistema : validarCredenciais()
+Sistema --> Usuario : loginSucesso
+@enduml
